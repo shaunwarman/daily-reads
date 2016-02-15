@@ -3,10 +3,11 @@ import nodemailer from 'nodemailer';
 import wreck from 'wreck';
 
 const subreddits  = ['javascript', 'webdev', 'programming', 'node'];
-const transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
 
 let articles = [];
 let count = 0;
+let transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
+
 subreddits.forEach(function (sub) {
     
     const baseUrl     = 'https://www.reddit.com/r/';
@@ -17,7 +18,7 @@ subreddits.forEach(function (sub) {
         
         wreck.read(response, null, (error, body) => {
             
-            var data = JSON.parse(body.toString('utf8'));
+            let data = JSON.parse(body.toString('utf8'));
             
             var mappedData = data.data.children.map((children) => {
                 if (children.data.subreddit === 'puppies') {
@@ -42,7 +43,7 @@ subreddits.forEach(function (sub) {
 });
 
 function sendMail(articles) {
-    var mailOptions = {
+    let mailOptions = {
         to: 'shaunwarman1@gmail.com',
         from: 'Mail Test',
         subject: 'Mail Test',
