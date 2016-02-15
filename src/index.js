@@ -10,8 +10,8 @@ let transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp
 
 subreddits.forEach(function (sub) {
     
-    const baseUrl     = 'https://www.reddit.com/r/';
-    const query       = '/top.json?sort=top&t=week&limit=5';
+    const baseUrl = 'https://www.reddit.com/r/';
+    const query = '/top.json?sort=top&t=week&limit=5';
     const url = baseUrl + sub + query;
     
     wreck.request('GET', url, {}, (error, response) => {
@@ -20,7 +20,7 @@ subreddits.forEach(function (sub) {
             
             let data = JSON.parse(body.toString('utf8'));
             
-            var mappedData = data.data.children.map((children) => {
+            let mappedData = data.data.children.map((children) => {
                 if (children.data.subreddit === 'puppies') {
                     return '<img style="width: 50%; height: 50%;" src=\"' + children.data.thumbnail + '\">' + '</img>';
                 } else {
@@ -28,7 +28,7 @@ subreddits.forEach(function (sub) {
                 }
             });
             
-            var htmlData = mappedData.map((article) => {
+            let htmlData = mappedData.map((article) => {
                 return '<p style="margin: 0 auto 40px auto">'+ article +'</p>';
             });
     
