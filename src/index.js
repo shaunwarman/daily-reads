@@ -2,7 +2,7 @@ import cron from 'node-cron';
 import nodemailer from 'nodemailer';
 import wreck from 'wreck';
 
-const subreddits  = ['puppies'];
+const subreddits  = ['node', 'javascript', 'programming', 'webdev'];
 
 
 let transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
