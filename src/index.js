@@ -4,10 +4,9 @@ import wreck from 'wreck';
 
 const subreddits  = ['node', 'javascript', 'programming', 'webdev'];
 
-
 let transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
 
-cron.schedule('1-31 * *', function () {
+cron.schedule('* * * * 0-7', function () {
     
     console.log('Cron running!');
     let articles = [];
