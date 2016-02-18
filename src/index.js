@@ -4,7 +4,7 @@ import wreck from 'wreck';
 
 const subreddits  = ['node', 'javascript', 'programming', 'webdev'];
 
-let transporter = nodemailer.createTransport('smtps://shaunwarman1%40gmail.com:shampoo1@smtp.gmail.com');
+let transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
 
 //cron.schedule('* * * * 0-7', function () {
     
