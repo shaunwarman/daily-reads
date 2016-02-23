@@ -75,6 +75,6 @@ async function main(subreddits) {
 }
 
 // erryday
-cron.schedule('* 7 * * *', () => {
+cron.schedule('1 14 * * *', () => {
     main(subreddits);
 });
