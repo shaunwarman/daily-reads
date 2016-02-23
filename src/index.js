@@ -1,16 +1,11 @@
+import { user, pass } from './config.js';
 import cron from 'node-cron';
 import nodemailer from 'nodemailer';
 import wreck from 'wreck';
 
 const subreddits  = ['node', 'javascript', 'programming', 'webdev'];
 
-let transporter = nodemailer.createTransport('smtps://user%40gmail.com:pass@smtp.gmail.com');
-
-//cron.schedule('* * * * 0-7', function () {
-
-console.log('Cron running!');
-let articles = [];
-let count = 0;
+let transporter = nodemailer.createTransport(`smtps://${user}%40gmail.com:${pass}@smtp.gmail.com`);
 
 function getArticle(url) {
     return new Promise((resolve, reject) => {
@@ -62,23 +57,24 @@ async function main(subreddits) {
     try {
 
         const articles = await getArticles(subreddits);
-
-        /**
-         * Filter json here { data: [{children}*5]}, {}, {}, {}
-         */
-
-        const data = await Promise.all(articles);
-
-        const htmlData = JSON.parse(data);
-
-        const html = htmlData.data.children.map((children) => {
-            return '<p style="margin: 0 auto 40px auto"><a style="font-size: 18px" href=' +  children.data.url + '>' + children.data.title + '</a></p>';
+        
+        const htmlData = await Promise.all(articles).then((result) => {
+            return result.map((each) => JSON.parse(each))
         });
-
+        
+        const html = htmlData.map((article) => {
+            return article.data.children.map((data) => {
+                return '<p style="margin: 0 auto 40px auto"><a style="font-size: 18px" href=' +  data.data.url + '>' + data.data.title + '</a></p>';
+            }).join(' ');
+        });
+        
         sendMail(html);
     } catch (error) {
-        console.log(error);
+        console.log('Error: ' + error);
     }
 }
 
-main(subreddits);
+// erryday
+cron.schedule('* 7 * * *', () => {
+    main(subreddits);
+});

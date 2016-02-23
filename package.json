@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir dist"
+    "build": "babel --sourceMaps=true --sourceMapTarget='sourcemap.json' src --out-dir dist"
   },
   "repository": {
     "type": "git",
